@@ -73,7 +73,8 @@ class BarangControler extends Controller
      */
     public function edit($id)
     {
-        //
+        $barang = Barang::findOrFail($id);
+        return view('pages.admin.barang.edit', compact('barang'));
     }
 
     /**
@@ -85,7 +86,22 @@ class BarangControler extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string',
+            'type' => 'required|string',
+            'description' => 'required|string',
+            'price' => 'required|integer',
+            'quantity' => 'required|integer',
+        ]);
+
+        $barang = Barang::findOrFail($id);
+
+        $data = $request->all();
+        $data['slug'] = Str::slug($request->name);
+
+        $barang->update($data);
+
+        return redirect()->route('barang.index');
     }
 
     /**

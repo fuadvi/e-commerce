@@ -14,12 +14,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('admin2')
-    ->group(
-        function () {
-            Route::resource('barang', BarangControler::class);
-        }
-    );
+// Route::prefix('admin2')
+//     ->group(
+//         function () {
+//             Route::resource('barang', BarangControler::class);
+//         }
+//     );
+
+
+Route::group(['middleware' => 'auth'], function () {
+    // admin
+    Route::group(['prefix' => 'admin2'], function () {
+
+        Route::get('/', function () {
+            return view('pages.admin.dashboard');
+        })->name('admin.dashboard');
+
+        Route::resource('barang', BarangControler::class);
+    });
+
+    // user
+});
+
+
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

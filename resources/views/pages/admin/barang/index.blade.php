@@ -28,7 +28,7 @@
                                 <td><span class="count">{{ $product->price }}</span></td>
                                 <td><span class="count">{{ $product->quantity }}</span></td>
                                 <td>
-                                    <a href="" class="btn btn-info">edit</a>
+                                    <a href="{{ route('barang.edit',$product->id) }}" class="btn btn-info">edit</a>
                                     <form action="{{ route('barang.destroy',$product->id) }}" method="post">
                                         @method('delete')
                                         @csrf
