@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BarangControler;
+use App\Http\Controllers\Admin\GalleryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,13 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::prefix('admin2')
-//     ->group(
-//         function () {
-//             Route::resource('barang', BarangControler::class);
-//         }
-//     );
-
+Route::view('/', 'pages.user.home');
+Route::view('/product', 'pages.user.product');
+Route::view('/card', 'pages.user.card');
 
 Route::group(['middleware' => 'auth'], function () {
     // admin
@@ -31,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
         })->name('admin.dashboard');
 
         Route::resource('barang', BarangControler::class);
+        Route::resource('gallery', GalleryController::class);
     });
 
     // user

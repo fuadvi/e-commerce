@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BarangRequest;
+use App\Http\Requests\GalleryRequest;
 use App\Models\Barang;
+use App\Models\Gallerie;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
-class BarangControler extends Controller
+class GalleryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +18,8 @@ class BarangControler extends Controller
      */
     public function index()
     {
-        $products = Barang::all();
-        return view('pages.admin.barang.index')->with(['products' => $products]);
+        $galleries = Gallerie::with('barang')->get();
+        return view('pages.admin.gallery.index', compact('galleries'));
     }
 
     /**
@@ -28,7 +29,8 @@ class BarangControler extends Controller
      */
     public function create()
     {
-        return view('pages.admin.barang.tambah');
+        $barang = Barang::all();
+        return view('pages.admin.gallery.tambah', compact('barang'));
     }
 
     /**
@@ -37,14 +39,15 @@ class BarangControler extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BarangRequest $request)
+    public function store(GalleryRequest $request)
     {
         $data = $request->all();
-        $data['slug'] = Str::slug($request->name);
-
-        Barang::create($data);
-
-        return redirect()->route('barang.index');
+        $data['image'] = $request->file('image')->store(
+            'assert/product',
+            'public'
+        );
+        Gallerie::create($data);
+        return redirect()->route('gallery.index');
     }
 
     /**
@@ -66,8 +69,9 @@ class BarangControler extends Controller
      */
     public function edit($id)
     {
-        $barang = Barang::findOrFail($id);
-        return view('pages.admin.barang.edit', compact('barang'));
+        $gallery = Gallerie::findOrFail($id);
+        $barang = Barang::all();
+        return view('pages.admin.gallery.edit', compact('gallery', 'barang'));
     }
 
     /**
@@ -77,16 +81,17 @@ class BarangControler extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(BarangRequest $request, $id)
+    public function update(GalleryRequest $request, $id)
     {
-        $barang = Barang::findOrFail($id);
-
         $data = $request->all();
-        $data['slug'] = Str::slug($request->name);
-
-        $barang->update($data);
-
-        return redirect()->route('barang.index');
+        $data['image'] = $request->file('image')->store(
+            'assert/product',
+            'public'
+        );
+        $gallery = Gallerie::findOrFail($id);
+        Storage::delete($gallery->image);
+        $gallery->update($data);
+        return redirect()->route('gallery.index');
     }
 
     /**
@@ -97,8 +102,7 @@ class BarangControler extends Controller
      */
     public function destroy($id)
     {
-        Barang::findOrFail($id)->delete();
-
+        Gallerie::findOrFail($id)->delete();
         return redirect()->back();
     }
 }
