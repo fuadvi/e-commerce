@@ -20,15 +20,4 @@ class Gallerie extends Model
     {
         return $this->belongsTo(Barang::class);
     }
-    // relasi ke tabel barang
-    public function tes()
-    {
-        return $this->belongsTo(Barang::class);
-    }
-
-    // relasi ke tabel barang
-    public function c()
-    {
-        return $this->belongsTo(Barang::class);
-    }
 }

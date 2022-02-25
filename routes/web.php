@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BarangControler;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\HomeControler;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'pages.user.home');
+Route::get('/', [HomeControler::class, 'index']);
 Route::view('/product', 'pages.user.product');
 Route::view('/card', 'pages.user.card');
 

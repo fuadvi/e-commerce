@@ -10,18 +10,14 @@ class Barang extends Model
 {
     use HasFactory, SoftDeletes;
 
-    // protected $fillable = [
-    //     'nama',
-    //     'slug',
-    //     'type',
-    //     'description',
-    //     'price',
-    //     'quantity',
-    // ];
-
     protected $guarded = [
         'id',
         'created_at',
         'updated_at',
     ];
+
+    public function galleries()
+    {
+        return $this->hasMany(Gallerie::class);
+    }
 }
