@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeControler::class, 'index']);
-Route::view('/product', 'pages.user.product');
+Route::get('/products/{slug}', [HomeControler::class, 'show'])->name('product.show');
+
+
 Route::view('/card', 'pages.user.card');
 
 Route::group(['middleware' => 'auth'], function () {

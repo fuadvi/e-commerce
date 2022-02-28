@@ -40,7 +40,7 @@ class BarangControler extends Controller
     public function store(BarangRequest $request)
     {
         $data = $request->all();
-        $data['slug'] = Str::slug($request->name);
+        $data['slug'] = Str::slug($request->nama);
 
         Barang::create($data);
 
@@ -82,7 +82,7 @@ class BarangControler extends Controller
         $barang = Barang::findOrFail($id);
 
         $data = $request->all();
-        $data['slug'] = Str::slug($request->name);
+        $data['slug'] = Str::slug($request->nama);
 
         $barang->update($data);
 
