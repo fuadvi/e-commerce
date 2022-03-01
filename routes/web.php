@@ -19,9 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeControler::class, 'index']);
 Route::get('/products/{slug}', [HomeControler::class, 'show'])->name('product.show');
 
-
-Route::view('/card', 'pages.user.card');
-
 Route::group(['middleware' => 'auth'], function () {
     // admin
     Route::group(['prefix' => 'admin2'], function () {
@@ -35,6 +32,10 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // user
+    Route::group([], function () {
+        Route::get('/card', [HomeControler::class, 'listCard'])->name('card.list');
+        Route::post('/card/{id}', [HomeControler::class, 'addCard'])->name('card.add');
+    });
 });
 
 

@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->bigInteger('tes', false, true)->unique();
+        Schema::table('cards', function (Blueprint $table) {
+            $table->integer('quantity')->default(1);
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('tes');
+        Schema::table('cards', function (Blueprint $table) {
+            $table->dropColumn('quantity');
         });
     }
 };

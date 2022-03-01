@@ -67,10 +67,19 @@
                                     <h4>Rp.{{ $product->price }}</h4>
                                 </div>
                                 <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1" />
-                                    </div>
-                                    <a href="#" class="primary-btn pd-cart">Add To Cart</a>
+                                    @auth
+                                        <form action="{{ route('card.add', $product->id) }}" method="post">
+                                            @csrf
+
+                                            <div class="pro-qty">
+                                                <input type="text" name="quantity" value="1" />
+                                            </div>
+                                            <button class="primary-btn pd-cart" type="submit">Add To Card</button>
+                                        </form>
+                                    @endauth
+                                    @guest
+                                        <a href="{{ route('login') }}" class="primary-btn pd-cart">Login</a>
+                                    @endguest
                                 </div>
                             </div>
                         </div>

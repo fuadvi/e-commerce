@@ -62,9 +62,16 @@
                                         <i class="icon_heart_alt"></i>
                                     </div>
                                     <ul>
-                                        <li class="w-icon active">
-                                            <a href="#"><i class="icon_bag_alt"></i></a>
-                                        </li>
+                                        @auth
+                                            <li class="w-icon active">
+                                                <a href="#"><i class="icon_bag_alt"></i></a>
+                                            </li>
+                                        @endauth
+                                        @guest
+                                            <li class="w-icon active">
+                                                <a href="{{ route('login') }}"><i class="social_googleplus_square"></i></a>
+                                            </li>
+                                        @endguest
                                         <li class="quick-view"><a href="{{ route('product.show', $product->slug) }}">+
                                                 Quick View</a></li>
                                         <li class="w-icon">
